@@ -22,14 +22,10 @@ public class DbService : IDbService
             .ToListAsync();
     }
 
-    public Task addItemtoBackpack(IEnumerable<items> itemsEnumerable)
+    public async Task addItemtoBackpack(IEnumerable<backpacks> itemsEnumerable)
     {
-        foreach (var item in itemsEnumerable)
-        {
-            
-        }
-
-        return NotImplementedException;
+        await _context.AddAsync(itemsEnumerable);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> DoesItemExist(int itemId)

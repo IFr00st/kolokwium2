@@ -1,4 +1,6 @@
-﻿using Kolokwium2.DTOs;
+﻿using System.Transactions;
+using Kolokwium2.DTOs;
+using Kolokwium2.Models;
 using Kolokwium2.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,5 +39,41 @@ public class CharactersController : ControllerBase
                 aquiredAt = y.AcquiredAt
             }).ToList()
         }));
+    }
+    
+    [HttpPost("{clientID}/backpacks")]
+    public async Task<IActionResult> AddNewOrder(int characterID, List<int> itemsIds)
+    {
+        foreach (var x in itemsIds)
+        {
+            if(!await _dbService.DoesItemExist(x))
+                return NotFound($"Item with given ID - {itemsIds} doesn't exist");
+        }
+        
+
+        var backpacks = new List<backpacks>();
+
+        foreach (var VARIABLE in itemsIds)
+        {
+            backpacks.Add(new backpacks
+            {
+                Amount = 1,
+                CharacterId = characterID,
+                ItemId = VARIABLE
+            });
+        }
+        
+        using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        {
+            await _dbService.addItemtoBackpack(backpacks);
+
+            scope.Complete();
+        }
+        
+    
+        return Created("api/backpacks", new
+        {
+            
+        });
     }
 }
