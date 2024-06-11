@@ -8,5 +8,5 @@ public class titles
     public int Id { get; set; }
     [MaxLength(100)]
     public string Name { get; set; }
-    public ICollection<charactertitles> charactertitles = new List<charactertitles>();
+    public ICollection<charactertitles> charactertitles { get; set; }= new List<charactertitles>();
 }

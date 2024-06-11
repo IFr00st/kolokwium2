@@ -41,7 +41,7 @@ public class CharactersController : ControllerBase
         }));
     }
     
-    [HttpPost("{clientID}/backpacks")]
+    [HttpPost("{characterID}/backpacks")]
     public async Task<IActionResult> AddNewOrder(int characterID, List<int> itemsIds)
     {
         foreach (var x in itemsIds)

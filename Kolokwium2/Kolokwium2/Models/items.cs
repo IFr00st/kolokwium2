@@ -9,5 +9,5 @@ public class items
     [MaxLength(100)]
     public string Name { get; set; }
     public int Weight { get; set; }
-    public ICollection<backpacks> backpacks = new List<backpacks>();
+    public ICollection<backpacks> backpacks { get; set; }= new List<backpacks>();
 }
